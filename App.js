@@ -12,6 +12,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 //Importing components
 import LandingScreen from './components/auth/Landing'
 import RegisterScreen from './components/auth/Register'
+import LoginScreen from './components/auth/Login'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBv-51UP4vVwX64yH4ELqYza57woF5E-gk",
@@ -32,11 +33,11 @@ const Stack = createStackNavigator()
 
 export default function App() {
 
-  console.log('Executed')
+  console.log('App Executed')
 
   return (
     <NavigationContainer>
-      
+
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" 
           component={LandingScreen} 
@@ -45,6 +46,11 @@ export default function App() {
 
         <Stack.Screen name="Register" 
           component={RegisterScreen} 
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen name="Login" 
+          component={LoginScreen} 
           options={{headerShown: false}}
         />
 
