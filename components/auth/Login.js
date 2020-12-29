@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, View, Button, TextInput} from 'react-native'  
+import { SafeAreaView, StyleSheet, View, Button, TextInput } from 'react-native'  
 
 import firebase from 'firebase'
 
@@ -16,8 +16,10 @@ class LoginScreen extends Component {
     }
 
     onSignIn() {
+        console.log('---------onSignIn------------')
         const {email, password} = this.state
 
+        //Making a call to firebase to sign in user with email and password
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log(result)

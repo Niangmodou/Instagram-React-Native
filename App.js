@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
+import React, {Component} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 //Importing firebase
@@ -31,32 +31,80 @@ if(firebase.apps.length === 0) {
 
 const Stack = createStackNavigator()
 
-export default function App() {
+class App extends Component {
+  constructor(props) {
+    super(props)
 
-  console.log('App Executed')
+    this.state = {
+      isLoggedIn: false,
+      loaded: false
+    }
+  }
 
-  return (
-    <NavigationContainer>
+  componentDidMount() {
+    //Checking whether the user is logged in
+    firebase.auth().onAuthStateChanged((user) => {
+      if(!user){
 
-      <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen name="Landing" 
-          component={LandingScreen} 
-          options={{headerShown: false}}
-        />
+        this.setState({
+          isLoggedIn: false,
+          loaded: true
+        })
 
-        <Stack.Screen name="Register" 
-          component={RegisterScreen} 
-          options={{headerShown: false}}
-        />
+      }else {
+        this.setState({
+          isLoggedIn: true,
+          loaded: true
+        })
+      }
+    })
+  }
 
-        <Stack.Screen name="Login" 
-          component={LoginScreen} 
-          options={{headerShown: false}}
-        />
+  render() {
+    const { isLoggedIn, loaded } = this.state
 
-        
+    if(!loaded){
+      return (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+            <Text>
+                Loading.....
+            </Text>
+        </View>
+      )
+    }
 
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    if(!isLoggedIn) {
+
+      return (
+        <NavigationContainer>
+    
+          <Stack.Navigator initialRouteName="Landing">
+            <Stack.Screen name="Landing" 
+              component={LandingScreen} 
+              options={{headerShown: false}}
+            />
+    
+            <Stack.Screen name="Register" 
+              component={RegisterScreen} 
+              options={{headerShown: false}}
+            />
+    
+            <Stack.Screen name="Login" 
+              component={LoginScreen} 
+              options={{headerShown: false}}
+            />
+
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
+
+    return (
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Text>User is Logged In</Text>
+      </View>
+    )
+  }
 }
+
+export default App

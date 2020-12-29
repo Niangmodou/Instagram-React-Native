@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, View, Button, TextInput} from 'react-native'  
+import { SafeAreaView, StyleSheet, View, Button, TextInput } from 'react-native'  
 
 import firebase from 'firebase'
 
@@ -22,8 +22,15 @@ class RegisterScreen extends Component {
         console.log('---------onSignUp------------')
         const {email, password, name} = this.state
 
+        //Making a call to firebase to sign in user with email and password
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((result) => {
+                firebase.firestore().collection('users')
+                    .doc(firebase.auth().currentUser.uid)
+                    .set({
+                        name,
+                        email
+                    })
                 console.log(result)
             })
             .catch((error) => {

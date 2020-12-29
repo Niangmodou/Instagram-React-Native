@@ -1,9 +1,5 @@
 import React from 'react'
-import {StyleSheet, 
-        Text, 
-        SafeAreaView,
-        View, 
-        Button} from 'react-native'
+import { StyleSheet, SafeAreaView, Button } from 'react-native'
 
 const LandingScreen = (props) => {
     const {navigation} = props
